@@ -62,7 +62,7 @@ ${message}
             </p>
 
             <a
-              href="https://wa.me/919999999999"
+              href="https://wa.me/918074326428"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600"
@@ -83,7 +83,7 @@ ${message}
             </p>
 
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/manus.handmadeworks?igsh=MWpyYjMybzZ5bThncA=="
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 bg-pink-500 text-white px-5 py-2 rounded-lg hover:bg-pink-600"

@@ -15,7 +15,18 @@ function Home() {
       {/* Hero Section */}
       <section className="min-h-screen bg-linear-to-br from-purple-50 via-pink-50 to-white flex items-center">
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-12 items-center">
+        <div className="
+max-w-7xl
+mx-auto
+px-4
+sm:px-6
+lg:px-12
+grid
+grid-cols-1
+md:grid-cols-2
+gap-10
+items-center
+">
 
           {/* Left Content */}
           <div>
@@ -24,7 +35,18 @@ function Home() {
               Handmade Jewellery Collection
             </span>
 
-            <h1 className="mt-6 text-5xl lg:text-6xl font-bold leading-tight">
+            <h1
+className="
+mt-6
+text-4xl
+sm:text-5xl
+lg:text-6xl
+font-bold
+leading-tight
+text-center
+md:text-left
+"
+>
               Handmade
               <span className="text-purple-600">
                 {" "}With Love{" "}
@@ -32,14 +54,33 @@ function Home() {
               & Creativity ✨
             </h1>
 
-            <p className="mt-6 text-gray-600 text-lg">
+            <p
+className="
+mt-6
+text-gray-600
+text-base
+sm:text-lg
+text-center
+md:text-left
+"
+>
               Discover beautiful handmade jewellery,
               bangles, chains, hair clips and customized
               accessories crafted specially for you.
             </p>
 
             {/* Buttons */}
-            <div className="flex gap-4 mt-8">
+            <div
+className="
+flex
+flex-col
+sm:flex-row
+gap-4
+mt-8
+justify-center
+md:justify-start
+"
+>
 
               <Link
                 to="/products"
@@ -58,7 +99,17 @@ function Home() {
             </div>
 
             {/* Stats */}
-            <div className="mt-10 flex gap-8">
+            <div
+className="
+mt-10
+grid
+grid-cols-3
+gap-4
+text-center
+md:flex
+md:gap-8
+"
+>
 
               <div>
                 <h3 className="text-2xl font-bold">
@@ -92,13 +143,31 @@ function Home() {
           </div>
 
           {/* Right Image */}
-          <div className="flex justify-center">
+          <div
+className="
+flex
+justify-center
+order-first
+md:order-last
+"
+>
 
             <img
-              src={heroImage}
-              alt="Handmade Jewellery"
-              className="w-full max-w-md rounded-3xl shadow-2xl hover:scale-105 transition duration-500"
-            />
+src={heroImage}
+alt="Handmade Jewellery"
+className="
+w-full
+max-w-xs
+sm:max-w-sm
+md:max-w-md
+lg:max-w-lg
+rounded-3xl
+shadow-2xl
+hover:scale-105
+transition-all
+duration-700
+"
+/>
 
           </div>
 

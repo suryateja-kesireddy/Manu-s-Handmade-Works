@@ -1,0 +1,419 @@
+/* ==========================================
+   PHASE 1 - MOBILE RESPONSIVE CSS
+   File: src/styles/mobile.css
+   ========================================== */
+
+@media screen and (max-width:768px){
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
+body{
+    overflow-x:hidden;
+}
+
+section{
+    padding:40px 15px !important;
+}
+
+h1{
+    font-size:2rem !important;
+}
+
+h2{
+    font-size:1.6rem !important;
+}
+
+h3{
+    font-size:1.2rem !important;
+}
+
+p{
+    font-size:15px !important;
+}
+
+/* ==========================================
+   NAVBAR
+========================================== */
+
+nav{
+
+    padding:8px 15px !important;
+
+}
+
+nav .max-w-7xl{
+
+    padding:0px 5px !important;
+
+}
+
+nav h1{
+
+    font-size:20px !important;
+
+}
+
+nav img{
+
+    width:45px !important;
+
+    height:45px !important;
+
+}
+
+nav .flex.items-center.gap-8{
+
+    gap:12px !important;
+
+    flex-wrap:wrap;
+
+}
+
+nav a{
+
+    font-size:14px !important;
+
+}
+
+nav .rounded-full{
+
+    padding:8px 14px !important;
+
+    font-size:13px !important;
+
+}
+
+/* ==========================================
+   HERO SECTION
+========================================== */
+
+.min-h-screen{
+
+    min-height:auto !important;
+
+}
+
+.grid{
+
+    grid-template-columns:1fr !important;
+
+}
+
+.hero-image img{
+
+    width:100% !important;
+
+    max-width:320px !important;
+
+    margin:auto;
+
+}
+
+.flex.gap-4.mt-8{
+
+    flex-direction:column;
+
+}
+
+.flex.gap-4.mt-8 a{
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+/* ==========================================
+   PRODUCT PAGE
+========================================== */
+
+.max-w-7xl{
+
+    padding-left:15px !important;
+
+    padding-right:15px !important;
+
+}
+
+.grid.lg\:grid-cols-4{
+
+    grid-template-columns:1fr !important;
+
+}
+
+.bg-white.rounded-3xl{
+
+    width:100%;
+
+}
+
+.swiper{
+
+    width:100%;
+
+}
+
+.swiper img{
+
+    height:300px !important;
+
+    object-fit:cover;
+
+}
+
+input{
+
+    font-size:15px;
+
+}
+
+/* ==========================================
+   CATEGORY BUTTONS
+========================================== */
+
+.flex.flex-wrap.gap-3{
+
+    flex-wrap:nowrap !important;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+
+    padding-bottom:10px;
+
+}
+
+.flex.flex-wrap.gap-3::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+/* ==========================================
+   PRODUCT DETAILS
+========================================== */
+
+.sticky{
+
+    position:relative !important;
+
+    top:0 !important;
+
+}
+
+.h-\[600px\]{
+
+    height:350px !important;
+
+}
+
+.text-5xl{
+
+    font-size:2rem !important;
+
+}
+
+.text-4xl{
+
+    font-size:1.8rem !important;
+
+}
+
+.grid.grid-cols-2{
+
+    grid-template-columns:1fr !important;
+
+}
+
+button{
+
+    width:100%;
+
+}
+
+/* ==========================================
+   THUMBNAILS
+========================================== */
+
+.w-20{
+
+    width:65px !important;
+
+}
+
+.h-20{
+
+    height:65px !important;
+
+}
+
+/* ==========================================
+   ABOUT PAGE
+========================================== */
+
+.md\:grid-cols-2{
+
+    grid-template-columns:1fr !important;
+
+}
+
+img{
+
+    max-width:100%;
+
+}
+
+/* ==========================================
+   CONTACT PAGE
+========================================== */
+
+.md\:grid-cols-3{
+
+    grid-template-columns:1fr !important;
+
+}
+
+input,
+textarea,
+select{
+
+    width:100%;
+
+}
+
+/* ==========================================
+   CART PAGE
+========================================== */
+
+.max-w-6xl{
+
+    padding-left:15px !important;
+
+    padding-right:15px !important;
+
+}
+
+.flex.justify-between{
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.bg-purple-50{
+
+    padding:20px !important;
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer{
+
+    text-align:center;
+
+}
+
+footer .grid{
+
+    grid-template-columns:1fr !important;
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+button,
+a{
+
+    transition:.3s;
+
+}
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+/* ==========================================
+   IMAGES
+========================================== */
+
+img{
+
+    border-radius:18px;
+
+}
+
+/* ==========================================
+   SPACING
+========================================== */
+
+.py-20{
+
+    padding-top:50px !important;
+
+    padding-bottom:50px !important;
+
+}
+
+.mt-20{
+
+    margin-top:50px !important;
+
+}
+
+.mb-10{
+
+    margin-bottom:30px !important;
+
+}
+
+}
+
+/* ==========================================
+   TABLET RESPONSIVE
+========================================== */
+
+@media screen and (min-width:769px) and (max-width:1024px){
+
+.grid.lg\:grid-cols-4{
+
+    grid-template-columns:repeat(2,1fr)!important;
+
+}
+
+.grid.lg\:grid-cols-2{
+
+    grid-template-columns:1fr 1fr!important;
+
+}
+
+.max-w-7xl{
+
+    padding-left:25px;
+
+    padding-right:25px;
+
+}
+.logo img{
+    width:45px;
+    height:45px;
+}
+
+.logo h1{
+    font-size:28px;
+}
+
+.logo p{
+    font-size:12px;
+}
+
+}

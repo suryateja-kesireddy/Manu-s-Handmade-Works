@@ -10,6 +10,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import "./styles/mobile.css";
 
 function App() {
   return (
