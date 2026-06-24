@@ -52,7 +52,7 @@ function Navbar() {
 
           <div>
 
-            <h1 className="text-3xl font-extrabold bg-gradient-to-r from-purple-700 via-pink-500 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-extrabold bg-linear-to-r from-purple-700 via-pink-500 to-pink-600 bg-clip-text text-transparent">
 
               Manu's Handmade Works
 
@@ -122,7 +122,7 @@ function Navbar() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+            className="flex items-center gap-2 px-5 py-2 rounded-full bg-linear-to-r from-purple-600 to-pink-500 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
           >
 
             💬 WhatsApp Us
@@ -194,7 +194,7 @@ function Navbar() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-purple-600 to-pink-500 text-white text-center py-3 rounded-full font-semibold"
+              className="bg-linear-to-r from-purple-600 to-pink-500 text-white text-center py-3 rounded-full font-semibold"
             >
               💬 WhatsApp Us
             </a>

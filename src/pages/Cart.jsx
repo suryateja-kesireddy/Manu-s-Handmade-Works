@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+//import CartItem from "../components/cart/CartItem";
+
+//import EmptyCart from "../components/cart/EmptyCart";
+import { saveOrder } from "../admin/services/orderService";
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -55,7 +59,7 @@ function Cart() {
     0
   );
 
-  const handleWhatsAppOrder = () => {
+ const handleWhatsAppOrder = async () => {
     if (
       !customerName ||
       !phone ||
@@ -81,9 +85,36 @@ function Cart() {
       );
       return;
     }
+    const orderData = {
+
+  customerName,
+
+  phone,
+
+  address,
+
+  colorRequirement,
+
+  needCustomization,
+
+  customization,
+
+  deliveryDate,
+
+  products: cartItems,
+
+  totalAmount,
+
+  totalQuantity,
+
+};
+
+const orderId = await saveOrder(orderData);
 
     let message = `
 🌸 NEW ORDER - MANU'S HANDMADE WORKS 🌸
+
+🆔 Order ID : ${orderId}
 
 ━━━━━━━━━━━━━━━━━━
 
@@ -147,12 +178,71 @@ ${deliveryDate}
 Manu's Handmade Works
 `;
 
-    window.open(
-      `https://wa.me/918074326428?text=${encodeURIComponent(
-        message
-      )}`,
-      "_blank"
-    );
+    try {
+
+  const orderData = {
+
+    customerName,
+
+    phone,
+
+    address,
+
+    colorRequirement,
+
+    needCustomization,
+
+    customization,
+
+    deliveryDate,
+
+    products: cartItems,
+
+    totalAmount,
+
+    totalQuantity,
+
+  };
+
+  // Save order to Firebase
+  const orderId = await saveOrder(orderData);
+
+  // Add Order ID to WhatsApp message
+  const finalMessage = `
+
+🆔 Order ID : ${orderId}
+
+${message}
+
+`;
+
+  // Open WhatsApp
+  window.open(
+
+    `https://wa.me/918074326428?text=${encodeURIComponent(
+      finalMessage
+    )}`,
+
+    "_blank"
+
+  );
+
+  // Clear cart
+  localStorage.removeItem("cart");
+
+  setCartItems([]);
+
+  window.dispatchEvent(new Event("storage"));
+
+  alert("Order placed successfully!");
+
+} catch (error) {
+
+  console.log(error);
+
+  alert("Failed to place order");
+
+}
   };
 
   return (
@@ -170,197 +260,542 @@ Manu's Handmade Works
         <>
           {/* Cart Items */}
 
-          <div className="space-y-5">
+          {/* Cart Items */}
 
-            {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex justify-between items-center bg-white shadow-md p-5 rounded-xl"
-              >
-                <div>
-                  <h2 className="font-semibold text-lg">
-                    {item.name}
-                  </h2>
+<div className="space-y-6">
 
-                  <p>
-                    ₹{item.price} ×{" "}
-                    {item.quantity}
-                  </p>
+  {cartItems.map((item) => (
 
-                  <p className="font-bold text-purple-600">
-                    ₹
-                    {item.price *
-                      item.quantity}
-                  </p>
-                </div>
+    <div
+      key={item.id}
+      className="bg-white rounded-3xl shadow-lg border border-purple-100 overflow-hidden hover:shadow-2xl transition-all duration-300"
+    >
 
-                <button
-                  onClick={() =>
-                    removeItem(item.id)
-                  }
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
+      <div className="flex flex-col md:flex-row">
 
-          </div>
+        {/* Product Image */}
 
-          {/* Customer Form */}
+        <div className="md:w-64 w-full bg-purple-50 flex items-center justify-center p-5">
 
-          <div className="bg-white shadow-lg rounded-2xl p-6 mt-10">
+          <img
+            src={item.images ? item.images[0] : item.image}
+            alt={item.name}
+            className="w-52 h-52 object-cover rounded-2xl hover:scale-105 transition duration-500"
+          />
 
-            <h2 className="text-2xl font-bold text-purple-700 mb-6">
-              🛍️ Customer Details
-            </h2>
+        </div>
 
-            <div className="space-y-4">
+        {/* Product Details */}
 
-              <input
-                type="text"
-                placeholder="Full Name *"
-                value={customerName}
-                onChange={(e) =>
-                  setCustomerName(
-                    e.target.value
-                  )
-                }
-                className="w-full border p-3 rounded-lg"
-              />
+        <div className="flex-1 p-6 flex flex-col justify-between">
 
-              <input
-                type="tel"
-                placeholder="Phone Number *"
-                value={phone}
-                onChange={(e) =>
-                  setPhone(
-                    e.target.value
-                  )
-                }
-                className="w-full border p-3 rounded-lg"
-              />
+          <div>
 
-              <textarea
-                placeholder="Complete Address *"
-                value={address}
-                onChange={(e) =>
-                  setAddress(
-                    e.target.value
-                  )
-                }
-                rows="3"
-                className="w-full border p-3 rounded-lg"
-              />
+            <div className="flex flex-wrap gap-2 mb-3">
 
-              <input
-                type="text"
-                placeholder="Colour Requirement (Optional)"
-                value={colorRequirement}
-                onChange={(e) =>
-                  setColorRequirement(
-                    e.target.value
-                  )
-                }
-                className="w-full border p-3 rounded-lg"
-              />
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
 
-              <select
-                value={needCustomization}
-                onChange={(e) =>
-                  setNeedCustomization(
-                    e.target.value
-                  )
-                }
-                className="w-full border p-3 rounded-lg"
-              >
-                <option>
-                  No Customization
-                </option>
+                ✨ Handmade
 
-                <option>
-                  Need Customization
-                </option>
-              </select>
+              </span>
 
-              {needCustomization ===
-                "Need Customization" && (
-                <textarea
-                  placeholder="Customization Details *"
-                  value={customization}
-                  onChange={(e) =>
-                    setCustomization(
-                      e.target.value
-                    )
-                  }
-                  rows="3"
-                  className="w-full border p-3 rounded-lg"
-                />
-              )}
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
 
-              <div>
+                🚚 Delivery 2-5 Days
 
-                <label className="font-medium">
-                  Delivery Date Required *
-                </label>
-
-                <input
-                  type="date"
-                  value={deliveryDate}
-                  onChange={(e) =>
-                    setDeliveryDate(
-                      e.target.value
-                    )
-                  }
-                  className="w-full border p-3 rounded-lg mt-2"
-                />
-
-              </div>
+              </span>
 
             </div>
 
+            <h2 className="text-3xl font-bold text-gray-800">
+
+              {item.name}
+
+            </h2>
+
+            <div className="flex items-center mt-3 gap-2 text-yellow-500">
+
+              ⭐⭐⭐⭐⭐
+
+              <span className="text-gray-500 text-sm">
+
+                Premium Quality
+
+              </span>
+
+            </div>
+
+            <p className="text-purple-700 text-3xl font-bold mt-4">
+
+              ₹{item.price}
+
+            </p>
+
           </div>
 
-          {/* Order Summary */}
+          {/* Quantity & Remove */}
 
-          <div className="bg-purple-50 p-6 rounded-xl mt-10">
+          <div className="flex flex-col lg:flex-row justify-between items-center mt-8 gap-5">
 
-            <div className="bg-white border border-purple-200 rounded-xl p-5 mb-5">
+            <div className="flex items-center bg-purple-50 rounded-full p-2">
 
-              <h3 className="text-xl font-bold text-purple-700 mb-3">
-                Order Summary
-              </h3>
+              <button
 
-              <p>
-                Total Products:{" "}
-                {cartItems.length}
+                onClick={() => {
+
+                  const updated = cartItems.map((cartItem) =>
+
+                    cartItem.id === item.id
+
+                      ? {
+
+                          ...cartItem,
+
+                          quantity:
+
+                            cartItem.quantity > 1
+
+                              ? cartItem.quantity - 1
+
+                              : 1,
+
+                        }
+
+                      : cartItem
+
+                  );
+
+                  setCartItems(updated);
+
+                  localStorage.setItem(
+
+                    "cart",
+
+                    JSON.stringify(updated)
+
+                  );
+
+                  window.dispatchEvent(new Event("storage"));
+
+                }}
+
+                className="w-10 h-10 rounded-full bg-white shadow font-bold"
+
+              >
+
+                -
+
+              </button>
+
+              <span className="w-16 text-center text-2xl font-bold">
+
+                {item.quantity}
+
+              </span>
+
+              <button
+
+                onClick={() => {
+
+                  const updated = cartItems.map((cartItem) =>
+
+                    cartItem.id === item.id
+
+                      ? {
+
+                          ...cartItem,
+
+                          quantity:
+
+                            cartItem.quantity + 1,
+
+                        }
+
+                      : cartItem
+
+                  );
+
+                  setCartItems(updated);
+
+                  localStorage.setItem(
+
+                    "cart",
+
+                    JSON.stringify(updated)
+
+                  );
+
+                  window.dispatchEvent(new Event("storage"));
+
+                }}
+
+                className="w-10 h-10 rounded-full bg-white shadow font-bold"
+
+              >
+
+                +
+
+              </button>
+
+            </div>
+
+            <div className="text-center">
+
+              <p className="text-gray-500">
+
+                Sub Total
+
               </p>
 
-              <p>
-                Total Quantity:{" "}
-                {totalQuantity}
-              </p>
+              <p className="text-2xl font-bold text-green-600">
 
-              <p className="text-3xl font-bold text-green-600 mt-3">
-                ₹{totalAmount}
+                ₹{item.price * item.quantity}
+
               </p>
 
             </div>
 
             <button
-              onClick={
-                handleWhatsAppOrder
-              }
-              className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold"
+
+              onClick={() => removeItem(item.id)}
+
+              className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-semibold transition"
+
             >
-              Order on WhatsApp
+
+              🗑 Remove
+
             </button>
 
           </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  ))}
+
+</div>
+          {/* Customer Form */}
+
+          
+
+        {/* Customer Details */}
+
+<div className="mt-12 bg-white rounded-3xl shadow-xl border border-purple-100 overflow-hidden">
+
+  {/* Header */}
+
+  <div className="bg-linear-to-r from-purple-600 to-pink-500 p-6">
+
+    <h2 className="text-3xl font-bold text-white">
+
+      👤 Customer Details
+
+    </h2>
+
+    <p className="text-purple-100 mt-2">
+
+      Please fill the details carefully for a smooth order process.
+
+    </p>
+
+  </div>
+
+  <div className="p-8">
+
+    <div className="grid lg:grid-cols-2 gap-6">
+
+      {/* Name */}
+
+      <div>
+
+        <label className="font-semibold text-gray-700">
+
+          Full Name *
+
+        </label>
+
+        <input
+
+          type="text"
+
+          value={customerName}
+
+          onChange={(e) =>
+            setCustomerName(e.target.value)
+          }
+
+          placeholder="Enter your full name"
+
+          className="w-full mt-2 border-2 border-purple-100 rounded-xl p-4 focus:border-purple-500 outline-none"
+
+        />
+
+      </div>
+
+      {/* Phone */}
+
+      <div>
+
+        <label className="font-semibold text-gray-700">
+
+          Phone Number *
+
+        </label>
+
+        <input
+
+          type="tel"
+
+          value={phone}
+
+          onChange={(e) =>
+            setPhone(e.target.value)
+          }
+
+          placeholder="10 digit mobile number"
+
+          className="w-full mt-2 border-2 border-purple-100 rounded-xl p-4 focus:border-purple-500 outline-none"
+
+        />
+
+      </div>
+
+    </div>
+
+    {/* Address */}
+
+    <div className="mt-6">
+
+      <label className="font-semibold text-gray-700">
+
+        Delivery Address *
+
+      </label>
+
+      <textarea
+
+        rows="4"
+
+        value={address}
+
+        onChange={(e) =>
+          setAddress(e.target.value)
+        }
+
+        placeholder="Complete Address"
+
+        className="w-full mt-2 border-2 border-purple-100 rounded-xl p-4 focus:border-purple-500 outline-none"
+
+      />
+
+    </div>
+
+    <div className="grid lg:grid-cols-2 gap-6 mt-6">
+
+      {/* Colour */}
+
+      <div>
+
+        <label className="font-semibold text-gray-700">
+
+          Colour Requirement
+
+        </label>
+
+        <input
+
+          type="text"
+
+          value={colorRequirement}
+
+          onChange={(e) =>
+            setColorRequirement(e.target.value)
+          }
+
+          placeholder="Example : Red / Green / Gold"
+
+          className="w-full mt-2 border-2 border-purple-100 rounded-xl p-4 focus:border-purple-500 outline-none"
+
+        />
+
+      </div>
+
+      {/* Delivery Date */}
+
+      <div>
+
+        <label className="font-semibold text-gray-700">
+
+          Required Delivery Date *
+
+        </label>
+
+        <input
+
+          type="date"
+
+          value={deliveryDate}
+
+          onChange={(e) =>
+            setDeliveryDate(e.target.value)
+          }
+
+          className="w-full mt-2 border-2 border-purple-100 rounded-xl p-4 focus:border-purple-500 outline-none"
+
+        />
+
+      </div>
+
+    </div>
+
+    {/* Customization */}
+
+    <div className="mt-8">
+
+      <label className="font-semibold text-gray-700">
+
+        Customization
+
+      </label>
+
+      <select
+
+        value={needCustomization}
+
+        onChange={(e) =>
+          setNeedCustomization(e.target.value)
+        }
+
+        className="w-full mt-2 border-2 border-purple-100 rounded-xl p-4 focus:border-purple-500 outline-none"
+
+      >
+
+        <option>No Customization</option>
+
+        <option>Need Customization</option>
+
+      </select>
+
+    </div>
+
+    {needCustomization ===
+      "Need Customization" && (
+
+      <div className="mt-6">
+
+        <label className="font-semibold text-gray-700">
+
+          Customization Details *
+
+        </label>
+
+        <textarea
+
+          rows="4"
+
+          value={customization}
+
+          onChange={(e) =>
+            setCustomization(e.target.value)
+          }
+
+          placeholder="Write your customization requirements..."
+
+          className="w-full mt-2 border-2 border-purple-100 rounded-xl p-4 focus:border-purple-500 outline-none"
+
+        />
+
+      </div>
+
+    )}
+    {/* Order Summary */}
+
+<div className="mt-10 bg-white rounded-3xl shadow-lg border border-purple-100 p-8">
+
+  <h2 className="text-2xl font-bold text-purple-700 mb-6">
+    Order Summary
+  </h2>
+
+  <div className="space-y-3 text-gray-700">
+
+    <div className="flex justify-between">
+      <span>Total Products</span>
+      <span className="font-semibold">{cartItems.length}</span>
+    </div>
+
+    <div className="flex justify-between">
+      <span>Total Quantity</span>
+      <span className="font-semibold">{totalQuantity}</span>
+    </div>
+
+    <div className="flex justify-between">
+      <span>Delivery</span>
+      <span className="text-green-600 font-semibold">
+        Free
+      </span>
+    </div>
+
+    <hr />
+
+    <div className="flex justify-between text-3xl font-bold text-purple-700">
+
+      <span>Total</span>
+
+      <span>₹{totalAmount}</span>
+
+    </div>
+
+  </div>
+
+  <button
+    onClick={handleWhatsAppOrder}
+    className="w-full mt-8 bg-linear-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl text-lg font-semibold hover:scale-[1.02] transition shadow-lg"
+  >
+    🛒 Order on WhatsApp
+  </button>
+
+</div>
+
+    {/* Information Box */}
+
+    <div className="mt-8 bg-purple-50 border border-purple-200 rounded-2xl p-5">
+
+      <h3 className="text-xl font-bold text-purple-700">
+
+        💜 Order Information
+
+      </h3>
+
+      <ul className="mt-4 space-y-2 text-gray-600">
+
+        <li>✅ 100% Handmade Products</li>
+
+        <li>✅ Custom Orders Accepted</li>
+
+        <li>✅ Premium Quality Materials</li>
+
+        <li>✅ WhatsApp Confirmation After Order</li>
+
+        <li>✅ Delivery Across India</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+      </div>
+
         </>
       )}
+
     </div>
   );
+
 }
 
 export default Cart;
